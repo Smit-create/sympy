@@ -38,7 +38,6 @@ from .entity import GeometryEntity, GeometrySet
 from .point import Point, Point3D
 from sympy.utilities.misc import Undecidable, filldedent
 
-from sympy.utilities.exceptions import SymPyDeprecationWarning
 
 
 class LinearEntity(GeometrySet):
@@ -2472,7 +2471,7 @@ class Line3D(LinearEntity3D, Line):
 
         return LinearEntity3D.__new__(cls, p1, pt, **kwargs)
 
-    def equation(self, x='x', y='y', z='z', k=None):
+    def equation(self, x='x', y='y', z='z'):
         """Return the equations that define the line in 3D.
 
         Parameters
@@ -2503,11 +2502,6 @@ class Line3D(LinearEntity3D, Line):
         {x: 4*y/3 + 1}
 
         """
-        if k is not None:
-            SymPyDeprecationWarning(
-                            feature="equation() no longer needs 'k'",
-                            issue=13742,
-                            deprecated_since_version="1.2").warn()
         from sympy import solve
         x, y, z, k = [_symbol(i, real=True) for i in (x, y, z, 'k')]
         p1, p2 = self.points
