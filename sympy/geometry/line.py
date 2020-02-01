@@ -31,7 +31,6 @@ from sympy.logic.boolalg import And
 from sympy.simplify.simplify import simplify
 from sympy.geometry.exceptions import GeometryError
 from sympy.core.containers import Tuple
-from sympy.core.decorators import deprecated
 from sympy.sets import Intersection
 from sympy.matrices import Matrix
 from sympy.solvers.solveset import linear_coeffs
@@ -1214,9 +1213,6 @@ class Line(LinearEntity):
             return S.Zero
         return self.perpendicular_segment(other).length
 
-    @deprecated(useinstead="equals", issue=12860, deprecated_since_version="1.0")
-    def equal(self, other):
-        return self.equals(other)
 
     def equals(self, other):
         """Returns True if self and other are the same mathematical entities"""
