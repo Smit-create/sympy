@@ -217,6 +217,11 @@ def MultivariateT(syms, mu, sigma, v):
     """
     return multivariate_rv(MultivariateTDistribution, syms, mu, sigma, v)
 
+def MultivariateLaplace(syms, mean, std):
+    """
+    Creates a joint random variable with multivariate laplace distribution.
+    """
+    return multivariate_rv(MultivariateLaplaceDistribution, syms, mean, std)
 
 #-------------------------------------------------------------------------------
 # Multivariate Normal Gamma distribution ---------------------------------------------------------
