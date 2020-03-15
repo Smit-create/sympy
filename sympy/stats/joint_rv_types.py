@@ -155,6 +155,60 @@ class MultivariateLaplaceDistribution(JointDistribution):
 
 
 #-------------------------------------------------------------------------------
+
+class NameofDistribution(JointDistribution):
+    _argnames = ()
+    is_Continuous = True
+
+    @property
+    def set(self):
+        pass
+        # Interval/set on which distribution is defined
+
+    @staticmethod
+    def check(arguments):
+        pass
+        # check if the arguments passed are valid
+
+    def pdf(self, *args):
+        # probability density function of the distribution
+        pass
+
+    def marginal_distribution(self, indices, *syms):
+        # override the marginal_distribution only if the JointDistribution fails
+        # to produce it correctly
+        pass
+
+class MatrixGammaDistribution(JointDistribution):
+    _argnames = ('alpha', 'beta', 'scale_matrix')
+    is_Continuous = True
+
+    @staticmethod
+    def check(alpha, beta, scale_matrix):
+        if not isinstance(scale_matrix, MatrixSymbol):
+            _value_check(scale_matrix.is_positive_definite, "The shape matrix must be positive definite. ")
+        _value_check(scale_matrix.shape[0] == scale_matrix.shape[1], "Should be square matrix")
+        _value_check(alpha.is_positive, "Shape parameter should be positive.")
+        _value_check(beta.is_positive, "Scale parameter should be positive.")
+
+
+    @property
+    def set(self):
+         k = self.scale_matrix.shape[0]
+         return S.Reals**k
+
+    def pdf(self, *args):
+        alpha, beta, scale_matrix = self.alpha, self.beta, self.scale_matrix
+        p = scale_matrix.shape[0]
+        args = ImmutableMatrix(args)
+        sigma_inv_x = -scale_matrix.inv()*args/beta
+        return ((det(scale_matrix))**(-alpha))*(det(args)**(alpha -(p+1)/2))*\
+            exp(sigma_inv_x.trace())/(beta**(p*alpha))/gamma(alpha)
+
+def MatrixGamma(syms, alpha, beta, scale_matrix):
+    return multivariate_rv(MatrixGammaDistribution, syms, alpha, beta, scale_matrix)
+
+
 # Multivariate StudentT distribution ---------------------------------------------------------
 
 class MultivariateTDistribution(JointDistribution):
