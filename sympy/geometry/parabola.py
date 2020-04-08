@@ -40,9 +40,11 @@ class Parabola(GeometrySet):
     p parameter
     vertex
     eccentricity
+    latus_rectum
 
     Raises
     ======
+
     ValueError
         When `focus` is not a two dimensional point.
         When `focus` is a point of directrix.
@@ -379,15 +381,21 @@ class Parabola(GeometrySet):
     @property
     def latus_rectum(self):
         """Returns the line passing through the focus
-           that is perpendicular to the axis of symmetry
+        that is perpendicular to the axis of symmetry
 
-           Examples
-           ========
+        Returns
+        =======
 
-           >>> from sympy import Point, Line, Parabola
-           >>> p1 = Parabola(Point(0, 0), Line(Point(5, 8), Point(7, 8)))
-           >>> p1.latus_rectum
-           Line2D(Point2D(0, 0), Point2D(1, 0))
+        latus_rectum : Line
+            Lactus Rectum of Parabola
+
+        Examples
+        ========
+
+        >>> from sympy import Point, Line, Parabola
+        >>> p1 = Parabola(Point(0, 0), Line(Point(5, 8), Point(7, 8)))
+        >>> p1.latus_rectum
+        Line2D(Point2D(0, 0), Point2D(1, 0))
 
         """
         s = self.directrix.slope
