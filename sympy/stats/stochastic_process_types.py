@@ -4,7 +4,7 @@ from sympy import (Matrix, MatrixSymbol, S, Indexed, Basic,
                    Set, And, Eq, FiniteSet, ImmutableMatrix,
                    Lambda, Mul, Dummy, IndexedBase, Add,
                    linsolve, eye, Or, Not, Intersection,
-                   Union, Expr, Function, exp, cacheit,
+                   Union, Expr, Function, exp, cacheit,factorial,
                    Ge, Piecewise, Symbol, Interval,oo)
 from sympy.core.relational import Relational
 from sympy.logic.boolalg import Boolean
@@ -171,7 +171,7 @@ class StochasticProcess(Basic):
                 raise ValueError("Expected a RandomIndexedSymbol or "
                                 "key not  %s"%(type(arg)))
 
-        if args[0].pspace.distribution == None: # checks if there is any distribution available
+        if args[0].pspace.process.distribution == None: # checks if there is any distribution available
             return JointDistribution(*args)
 
         pdf = Lambda(tuple(args),

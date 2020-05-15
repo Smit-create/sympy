@@ -395,6 +395,8 @@ class IndependentProductPSpace(ProductPSpace):
         if isinstance(condition, Ne):
             condition = Eq(condition.args[0], condition.args[1])
             cond_inv = True
+        if isinstance(condition, And):
+            return Mul(*[self.probability(arg) for arg in condition.args])
         expr = condition.lhs - condition.rhs
         rvs = random_symbols(expr)
         dens = self.compute_density(expr)
